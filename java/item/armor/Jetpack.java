@@ -8,6 +8,7 @@ import armor.control.PlayerUtils;
 import armor.core.ArmorLoader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,7 +24,9 @@ public class Jetpack extends Eletric implements ISpecialArmor {
 	public Jetpack(double maxElectricity, float voltage,
 			ArmorMaterial material, int armortype, int rendertype) {
 		super(maxElectricity, voltage, material, armortype, rendertype);
-		this.setUnlocalizedName("jetChestplate");
+		this.setUnlocalizedName("jetpack");
+		this.setTextureName(ArmorLoader.modid + ":" + this.getUnlocalizedName() + ".png");
+		this.setCreativeTab(CreativeTabs.tabCombat);
 	}
 
 	@Override
@@ -55,15 +58,20 @@ public class Jetpack extends Eletric implements ISpecialArmor {
 			ItemStack itemstack = player.inventory.armorItemInSlot(2);
 
 			if (itemstack.getItem() instanceof Jetpack
-					&& this.getEnergy(player.inventory.armorItemInSlot(2)) > 99) {
+					&& this.getEnergy(player.inventory.armorItemInSlot(2)) > 10000) {
 
 				if (Keyboard.isKeyDown(KeyBindHandler.goUpKey.getKeyCode())) {
 					if (player.motionY > 0.0D) {
-						player.motionY += 0.084999999105930327D;
-
-						this.setEnergy(player.inventory.armorItemInSlot(2),
-								this.getEnergy(player.inventory
-										.armorItemInSlot(2)) - 500);
+						
+						double height = Math.pow(Math.round(player.posZ)  / world.getTopSolidOrLiquidBlock((int)player.posX, (int)player.posY), 2);
+						
+						double gravity = 9.8 / height;
+						double o = 1 - gravity;
+						double u = Math.log(o) + .2;
+						player.motionY += u;
+						
+						this.setEnergy(player.inventory.armorItemInSlot(2),this.getEnergy(player.inventory.armorItemInSlot(2)) - 10000);
+						
 						world.spawnParticle("smoke", player.posX,
 								player.posY - 1.0D, player.posZ, 0.0D, 0.0D,
 								0.0D);
@@ -101,12 +109,10 @@ public class Jetpack extends Eletric implements ISpecialArmor {
 	}
 
 	@Override
-	public String getArmorTexture(ItemStack stack, Entity entity, int slot,
-			String layer) {
-
-		return ArmorLoader.modid + ":armor/"
-				+ getArmorMaterial().name().toLowerCase() + "_" + layer
-				+ ".png";
+	public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type)
+	{
+		int layer = (slot == 2) ? 2 : 1;
+		return "uranuscraft_armor:armor/" + getArmorMaterial().name().toLowerCase() + "_" + layer + ".png";
 	}
 
 }

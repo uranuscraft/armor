@@ -111,6 +111,37 @@ public class ItemLoader {
 		ItemStack coalStack = new ItemStack(Items.coal, 1, 0);
 		ItemStack carbonfiberStack = new ItemStack(carbonfiber);
 		ItemStack carbonStack = new ItemStack(carbon);
+		GameRegistry.registerItem(carbon, "carbon");
+		GameRegistry.registerItem(carbonfiber, "carbonfiber");
+		GameRegistry.registerItem(solarHelmet, "solarhelmet");
+		GameRegistry.registerItem(scubaHelmet, "scubahelmet");
+		GameRegistry.registerItem(scubaChestplate, "scubachestplate");
+		GameRegistry.registerItem(scubaLeggings, "scubaleggings");
+		GameRegistry.registerItem(scubaBoots, "scubaboots");
+		
+		GameRegistry.registerItem(ninjaHelmet, "ninjahelmet");
+		GameRegistry.registerItem(ninjaChestplate, "ninjachestplate");
+		GameRegistry.registerItem(ninjaLeggings, "ninjaleggings");
+		GameRegistry.registerItem(ninjaBoots, "ninjaboots");
+		
+		GameRegistry.registerItem(nanoHelmet, "nanohelmet");
+		GameRegistry.registerItem(nanoChestplate, "nanochestplate");
+		GameRegistry.registerItem(nanoLeggings, "nanoleggings");
+		GameRegistry.registerItem(nanoBoots, "nanoboots");
+		
+		GameRegistry.registerItem(lavaHelmet, "lavahelmet");
+		GameRegistry.registerItem(lavaChestplate, "lavachestplate");
+		GameRegistry.registerItem(lavaLeggings, "lavaleggings");
+		GameRegistry.registerItem(lavaBoots, "lavaboots");
+		
+		GameRegistry.registerItem(evHelmet, "evhelmet");
+		GameRegistry.registerItem(evChestplate, "evchestplate");
+		GameRegistry.registerItem(evLeggings, "evleggings");
+		GameRegistry.registerItem(evBoots, "evboots");
+		
+		GameRegistry.registerItem(jetChestplate, "jetchestplate");
+		
+		
 		GameRegistry.addRecipe(ninjaHelmet.getUnchargedItem(), "xxx", "x x",
 				'x', woolStack);
 

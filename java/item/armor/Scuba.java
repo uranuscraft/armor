@@ -4,6 +4,7 @@ import armor.control.KeyBindHandler;
 import armor.core.ArmorLoader;
 import cpw.mods.fml.common.FMLCommonHandler;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -25,17 +26,26 @@ public class Scuba extends Eletric implements ISpecialArmor {
 		super(maxElectricity, voltage, material, armortype, par5);
 
 		if (par5 == 0) {
-			this.setUnlocalizedName("scubaHelmet");
+			this.setUnlocalizedName("scubahelmet");
+			this.setTextureName(ArmorLoader.modid + ":" + this.getUnlocalizedName() + ".png");
+			
 		} else if (par5 == 1) {
-			this.setUnlocalizedName("scubaChestplate");
+			this.setUnlocalizedName("scubachestplate");
+			this.setTextureName(ArmorLoader.modid + ":" + this.getUnlocalizedName() + ".png");
+			
 		} else if (par5 == 2) {
-			this.setUnlocalizedName("scubaLeggings");
+			this.setUnlocalizedName("scubaleggings");
+			this.setTextureName(ArmorLoader.modid + ":" + this.getUnlocalizedName() + ".png");
+			
 		} else if (par5 == 3) {
-			this.setUnlocalizedName("scubaBoots");
+			this.setUnlocalizedName("scubaboots");
+			this.setTextureName(ArmorLoader.modid + ":" + this.getUnlocalizedName() + ".png");
+			
 
 		}
+		this.setCreativeTab(CreativeTabs.tabCombat);
 	}
-
+public boolean isLightPressed = false;
 	@Override
 	public ArmorProperties getProperties(EntityLivingBase entity,
 			ItemStack stack, DamageSource source, double damage, int slot) {
@@ -83,7 +93,9 @@ public class Scuba extends Eletric implements ISpecialArmor {
 
 			if (FMLCommonHandler.instance().getEffectiveSide().isClient()) {
 				boolean key = KeyBindHandler.light.isPressed();
-
+			
+					
+			
 				if (key) {
 
 					PotionEffect invis = null;
@@ -122,6 +134,8 @@ public class Scuba extends Eletric implements ISpecialArmor {
 					}
 
 				}
+				}
+				
 			}
 			double armore = this.getEnergy(player.getCurrentArmor(0))
 					+ this.getEnergy(player.getCurrentArmor(1))
@@ -132,25 +146,28 @@ public class Scuba extends Eletric implements ISpecialArmor {
 
 				this.setEnergy(
 						player.inventory.armorItemInSlot(3),
-						this.getEnergy((player.inventory.armorItemInSlot(3))) - 250);
+						this.getEnergy((player.inventory.armorItemInSlot(3))) - 100000);
 				this.setEnergy(
 						player.inventory.armorItemInSlot(2),
-						this.getEnergy((player.inventory.armorItemInSlot(2))) - 250);
+						this.getEnergy((player.inventory.armorItemInSlot(2))) - 100000);
 				this.setEnergy(
 						player.inventory.armorItemInSlot(1),
-						this.getEnergy((player.inventory.armorItemInSlot(1))) - 250);
+						this.getEnergy((player.inventory.armorItemInSlot(1))) - 100000);
 				this.setEnergy(
 						player.inventory.armorItemInSlot(0),
-						this.getEnergy((player.inventory.armorItemInSlot(0))) - 250);
+						this.getEnergy((player.inventory.armorItemInSlot(0))) - 100000);
 
 				player.setAir(300);
 			}
-
-		}
+			if(KeyBindHandler.dark.isPressed()) {
+				inActive(player);
+			}
+		
 
 	}
 
 	public static void inActive(EntityPlayer player) {
+		
 		PotionEffect invis = null;
 		if (player.isPotionActive(Potion.nightVision.id)) {
 			invis = player.getActivePotionEffect(Potion.nightVision);
@@ -172,14 +189,12 @@ public class Scuba extends Eletric implements ISpecialArmor {
 		itemIcon = register.registerIcon(ArmorLoader.modid + ":"
 				+ getUnlocalizedName().replace("item.", ""));
 	}
-
 	@Override
-	public String getArmorTexture(ItemStack stack, Entity entity, int slot,
-			String layer) {
-
-		return ArmorLoader.modid + ":armor/"
-				+ getArmorMaterial().name().toLowerCase() + "_" + layer
-				+ ".png";
+	public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type)
+	{
+		int layer = (slot == 2) ? 2 : 1;
+		return "uranuscraft_armor:armor/" + getArmorMaterial().name().toLowerCase() + "_" + layer + ".png";
 	}
+
 
 }

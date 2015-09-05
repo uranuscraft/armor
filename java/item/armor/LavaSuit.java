@@ -2,6 +2,7 @@ package armor.item.armor;
 
 import armor.core.ArmorLoader;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,22 +18,31 @@ public class LavaSuit extends Eletric implements ISpecialArmor {
 			ArmorMaterial material, int armortype, int par5) {
 		super(maxElectricity, voltage, material, armortype, par5);
 		if (par5 == 0) {
-			this.setUnlocalizedName("lavaHelmet");
+			this.setUnlocalizedName("lavahelmet");
+			this.setTextureName(ArmorLoader.modid + ":" + this.getUnlocalizedName() + ".png");
+			
 		} else if (par5 == 1) {
-			this.setUnlocalizedName("lavaChestplate");
+			this.setUnlocalizedName("lavachestplate");
+			this.setTextureName(ArmorLoader.modid + ":" + this.getUnlocalizedName() + ".png");
+			
 		} else if (par5 == 2) {
-			this.setUnlocalizedName("lavaLeggings");
+			this.setUnlocalizedName("lavaleggings");
+			this.setTextureName(ArmorLoader.modid + ":" + this.getUnlocalizedName() + ".png");
+			
 		} else if (par5 == 3) {
-			this.setUnlocalizedName("lavaBoots");
+			this.setUnlocalizedName("lavaboots");
+			this.setTextureName(ArmorLoader.modid + ":" + this.getUnlocalizedName() + ".png");
+			
 
 		}
+		this.setCreativeTab(CreativeTabs.tabCombat);
 	}
 
 	@Override
 	public ArmorProperties getProperties(EntityLivingBase entity,
 			ItemStack stack, DamageSource source, double damage, int slot) {
 		EntityPlayer player = (EntityPlayer) entity;
-
+	
 		if (source.equals(source.lava)
 				&& this.getEnergy(player.getCurrentArmor(0)) > 999) {
 
@@ -108,11 +118,9 @@ public class LavaSuit extends Eletric implements ISpecialArmor {
 	}
 
 	@Override
-	public String getArmorTexture(ItemStack stack, Entity entity, int slot,
-			String layer) {
-
-		return ArmorLoader.modid + ":armor/"
-				+ getArmorMaterial().name().toLowerCase() + "_" + layer
-				+ ".png";
+	public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type)
+	{
+		int layer = (slot == 2) ? 2 : 1;
+		return "uranuscraft_armor:armor/" + getArmorMaterial().name().toLowerCase() + "_" + layer + ".png";
 	}
 }

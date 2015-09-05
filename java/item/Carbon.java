@@ -19,6 +19,8 @@ public class Carbon extends Item {
 		super();
 		this.setUnlocalizedName("carbon");
 		this.setCreativeTab(CreativeTabs.tabMaterials);
+		this.setTextureName(ArmorLoader.modid + ":" + this.getUnlocalizedName() + ".png");
+		
 	}
 
 	@SideOnly(Side.CLIENT)

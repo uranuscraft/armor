@@ -11,7 +11,7 @@ import micdoodle8.mods.galacticraft.api.GalacticraftRegistry;
 import micdoodle8.mods.galacticraft.api.item.IBreathableArmor;
 import micdoodle8.mods.galacticraft.api.world.*;
 import net.minecraft.client.renderer.texture.IIconRegister;
-
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -31,16 +31,24 @@ public class EvSuit extends Eletric implements ISpecialArmor, IBreathableArmor {
 			int armortype, int par5) {
 		super(maxElectricity, voltage, material, armortype, par5);
 		if (par5 == 0) {
-			this.setUnlocalizedName("evHelmet");
+			this.setUnlocalizedName("evhelmet");
+			this.setTextureName(ArmorLoader.modid + ":" + this.getUnlocalizedName() + ".png");
+			
 		} else if (par5 == 1) {
-			this.setUnlocalizedName("evChestplate");
+			this.setUnlocalizedName("evchestplate");
+			this.setTextureName(ArmorLoader.modid + ":" + this.getUnlocalizedName() + ".png");
+			
 		} else if (par5 == 2) {
-			this.setUnlocalizedName("evLeggings");
+			this.setUnlocalizedName("evleggings");
+			this.setTextureName(ArmorLoader.modid + ":" + this.getUnlocalizedName() + ".png");
+			
 		} else if (par5 == 3) {
-			this.setUnlocalizedName("evBoots");
+			this.setUnlocalizedName("evboots");
+			this.setTextureName(ArmorLoader.modid + ":" + this.getUnlocalizedName() + ".png");
+			
 
 		}
-
+this.setCreativeTab(CreativeTabs.tabCombat);
 	}
 
 	@Override
@@ -199,6 +207,7 @@ public class EvSuit extends Eletric implements ISpecialArmor, IBreathableArmor {
 
 	public void lightInActive(EntityPlayer player) {
 		if (FMLCommonHandler.instance().getEffectiveSide().isClient()) {
+			
 			if (player.isPotionActive(Potion.nightVision.id)
 					&& KeyBindHandler.light.isPressed()) {
 
@@ -218,6 +227,7 @@ public class EvSuit extends Eletric implements ISpecialArmor, IBreathableArmor {
 
 				}
 			}
+			
 		}
 
 	}
@@ -283,12 +293,10 @@ public class EvSuit extends Eletric implements ISpecialArmor, IBreathableArmor {
 	}
 
 	@Override
-	public String getArmorTexture(ItemStack stack, Entity entity, int slot,
-			String layer) {
-
-		return ArmorLoader.modid + ":armor/"
-				+ getArmorMaterial().name().toLowerCase() + "_" + layer
-				+ ".png";
+	public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type)
+	{
+		int layer = (slot == 2) ? 2 : 1;
+		return "uranuscraft_armor:armor/" + getArmorMaterial().name().toLowerCase() + "_" + layer + ".png";
 	}
 
 }

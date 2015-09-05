@@ -10,6 +10,7 @@ import cofh.api.energy.*;
 import mekanism.api.energy.IEnergizedItem;
 import micdoodle8.mods.galacticraft.api.world.ISolarLevel;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -40,6 +41,8 @@ public class SolarHelmet extends ItemArmor implements ISpecialArmor,
 	public SolarHelmet(ArmorMaterial material, int armortype, int rendertype) {
 		super(material, armortype, rendertype);
 		this.setUnlocalizedName("solarhelmet");
+		this.setTextureName(ArmorLoader.modid + ":" + this.getUnlocalizedName() + ".png");
+		this.setCreativeTab(CreativeTabs.tabCombat);
 	}
 
 	private static Map<EntityPlayer, PlayerState> playerState = new MapMaker()
@@ -276,12 +279,10 @@ public class SolarHelmet extends ItemArmor implements ISpecialArmor,
 	}
 
 	@Override
-	public String getArmorTexture(ItemStack stack, Entity entity, int slot,
-			String layer) {
-
-		return ArmorLoader.modid + ":armor/"
-				+ getArmorMaterial().name().toLowerCase() + "_" + layer
-				+ ".png";
+	public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type)
+	{
+		int layer = (slot == 2) ? 2 : 1;
+		return "uranuscraft_armor:armor/" + getArmorMaterial().name().toLowerCase() + "_" + layer + ".png";
 	}
 
 	public static IEnergyContainerItem charge;

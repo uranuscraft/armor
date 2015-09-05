@@ -3,12 +3,14 @@ package armor.item.armor;
 import armor.core.ArmorLoader;
 import micdoodle8.mods.galacticraft.api.item.IBreathableArmor;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
+import net.minecraft.world.World;
 import net.minecraftforge.common.ISpecialArmor;
 import net.minecraftforge.common.ISpecialArmor.ArmorProperties;
 
@@ -18,20 +20,30 @@ public class Nano extends Eletric implements ISpecialArmor, IBreathableArmor {
 			int armortype, int par5) {
 		super(maxElectricity, voltage, material, armortype, par5);
 		if (par5 == 0) {
-			this.setUnlocalizedName("nanoHelmet");
+			this.setUnlocalizedName("nanohelmet");
+			this.setTextureName(ArmorLoader.modid + ":" + this.getUnlocalizedName() + ".png");
+			
 		} else if (par5 == 1) {
-			this.setUnlocalizedName("nanoChestplate");
+			this.setUnlocalizedName("nanochestplate");
+			this.setTextureName(ArmorLoader.modid + ":" + this.getUnlocalizedName() + ".png");
+			
 		} else if (par5 == 2) {
-			this.setUnlocalizedName("nanoLeggings");
+			this.setUnlocalizedName("nanoleggings");
+			this.setTextureName(ArmorLoader.modid + ":" + this.getUnlocalizedName() + ".png");
+			
 		} else if (par5 == 3) {
-			this.setUnlocalizedName("nanoBoots");
+			this.setUnlocalizedName("nanoboots");
+			this.setTextureName(ArmorLoader.modid + ":" + this.getUnlocalizedName() + ".png");
+			
 
 		}
+		this.setCreativeTab(CreativeTabs.tabCombat);
 	}
 
 	@Override
 	public ArmorProperties getProperties(EntityLivingBase player,
 			ItemStack stack, DamageSource source, double damage, int slot) {
+		
 		if (source.equals(source.fall)) {
 			ArmorProperties armor = new ArmorProperties(10, 100, 150);
 
@@ -106,11 +118,19 @@ public class Nano extends Eletric implements ISpecialArmor, IBreathableArmor {
 	}
 
 	@Override
-	public String getArmorTexture(ItemStack stack, Entity entity, int slot,
-			String layer) {
-
-		return ArmorLoader.modid + ":armor/"
-				+ getArmorMaterial().name().toLowerCase() + "_" + layer
-				+ ".png";
+	public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type)
+	{
+		int layer = (slot == 2) ? 2 : 1;
+		return "uranuscraft_armor:armor/" + getArmorMaterial().name().toLowerCase() + "_" + layer + ".png";
+	}
+	
+	@Override
+	public void onArmorTick(World world, EntityPlayer player, ItemStack stack) {
+if(this.getEnergy(stack) > 10000) {
+	player.motionX *=10;
+	player.motionY *=10;
+	this.setEnergy(stack,this.getEnergy(stack) - 10000);
+}
+		
 	}
 }

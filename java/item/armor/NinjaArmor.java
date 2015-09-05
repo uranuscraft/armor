@@ -1,9 +1,9 @@
 package armor.item.armor;
 
 import armor.core.ArmorLoader;
-
 import mekanism.api.energy.IEnergizedItem;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -24,16 +24,23 @@ public class NinjaArmor extends Eletric implements ISpecialArmor {
 		super(par2, par3, par2EnumArmorMaterial, par4, par5);
 
 		if (par5 == 0) {
-			this.setUnlocalizedName("ninjaHelmet");
+			this.setUnlocalizedName("ninjahelmet");
+			this.setTextureName(ArmorLoader.modid + ":" + this.getUnlocalizedName() + ".png");
 		} else if (par5 == 1) {
-			this.setUnlocalizedName("ninjaChestplate");
+			this.setUnlocalizedName("ninjachestplate");
+			this.setTextureName(ArmorLoader.modid + ":" + this.getUnlocalizedName() + ".png");
+			
 		} else if (par5 == 2) {
-			this.setUnlocalizedName("ninjaLeggings");
+			this.setUnlocalizedName("ninjaleggings");
+			this.setTextureName(ArmorLoader.modid + ":" + this.getUnlocalizedName() + ".png");
+			
 		} else if (par5 == 3) {
-			this.setUnlocalizedName("ninjaBoots");
+			this.setUnlocalizedName("ninjaboots");
+			this.setTextureName(ArmorLoader.modid + ":" + this.getUnlocalizedName() + ".png");
+			
 
 		}
-
+		this.setCreativeTab(CreativeTabs.tabCombat);
 	}
 
 	@Override
@@ -92,21 +99,21 @@ public class NinjaArmor extends Eletric implements ISpecialArmor {
 					+ this.getEnergy(player.getCurrentArmor(2))
 					+ this.getEnergy(player.getCurrentArmor(3));
 
-			if (armor <= 999) {
+			if (armor <= 2500) {
 				inActive(player);
-			} else if (armor > 999) {
+			} else if (armor > 2500) {
 				player.addPotionEffect(new PotionEffect(Potion.invisibility.id,
 						20, -3));
 
 				seethrough = 1;
 				this.setEnergy(player.getCurrentArmor(0),
-						this.getEnergy(player.getCurrentArmor(0)) - 250);
+						this.getEnergy(player.getCurrentArmor(0)) - 2500);
 				this.setEnergy(player.getCurrentArmor(1),
-						this.getEnergy(player.getCurrentArmor(1)) - 250);
+						this.getEnergy(player.getCurrentArmor(1)) - 2500);
 				this.setEnergy(player.getCurrentArmor(2),
-						this.getEnergy(player.getCurrentArmor(2)) - 250);
+						this.getEnergy(player.getCurrentArmor(2)) - 2500);
 				this.setEnergy(player.getCurrentArmor(3),
-						this.getEnergy(player.getCurrentArmor(3)) - 250);
+						this.getEnergy(player.getCurrentArmor(3)) - 2500);
 
 			}
 
@@ -140,18 +147,18 @@ public class NinjaArmor extends Eletric implements ISpecialArmor {
 	public static int seethrough;
 
 	@Override
-	public String getArmorTexture(ItemStack stack, Entity entity, int slot,
-			String layer) {
-
-		if (seethrough == 0) {
-
-			return ArmorLoader.modid + ":armor/"
-					+ getArmorMaterial().name().toLowerCase() + "_" + layer
-					+ ".png";
-		} else {
-			return ArmorLoader.modid + ":armor/" + "see" + ".png";
+	public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type)
+	{
+		if(seethrough == 0) {
+			int layer = (slot == 2) ? 2 : 1;
+			return "uranuscraft_armor:armor/" + getArmorMaterial().name().toLowerCase() + "_" + layer + ".png";
 		}
-
+			else {
+				int layer = (slot == 2) ? 2 : 1;
+				return "uranuscraft_armor:armor/see.png";
+			}	
+		//int layer = (slot == 2) ? 2 : 1;
+		//return "uranuscraft_armor:armor/" + getArmorMaterial().name().toLowerCase() + "_" + layer + ".png";
 	}
 
 	public double E(EntityPlayer player) {
